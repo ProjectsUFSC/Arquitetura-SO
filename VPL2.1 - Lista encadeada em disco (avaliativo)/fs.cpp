@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <cstring>
 using namespace std;
 
 /**
@@ -70,8 +69,11 @@ void adiciona(std::string arquivoDaLista, std::string novoNome, std::string depo
                     file.write((char *)&listed_name, sizeof(listed_name));
 
                     // adicionando nome ao novo nodo
-                    char Buffer[20];
-                    strcpy(Buffer, novoNome.c_str()); // convertendo string para char
+                    char Buffer[20]; //converte nome para char
+                    for (size_t i = 0; i < novoNome.size() && i < sizeof(Buffer); i++)
+                    {
+                        Buffer[i] = novoNome[i];
+                    }
                     file.seekg(i + 4, file.beg);
                     file.write((char *)&Buffer, sizeof(Buffer));
 
