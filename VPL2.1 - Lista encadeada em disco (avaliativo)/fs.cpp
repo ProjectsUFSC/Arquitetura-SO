@@ -69,7 +69,7 @@ void adiciona(std::string arquivoDaLista, std::string novoNome, std::string depo
                     file.write((char *)&listed_name, sizeof(listed_name));
 
                     // adicionando nome ao novo nodo
-                    char Buffer[20]; //converte nome para char
+                    char Buffer[20] = {0}; //converte nome para char
                     for (size_t i = 0; i < novoNome.size() && i < sizeof(Buffer); i++)
                     {
                         Buffer[i] = novoNome[i];
