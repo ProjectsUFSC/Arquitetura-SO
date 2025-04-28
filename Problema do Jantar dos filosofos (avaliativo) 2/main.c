@@ -12,7 +12,7 @@ pthread_mutex_t mutex;
 
 void* f_mutex(void* arg){
     pthread_mutex_lock(&mutex);
-    int i = (int) arg;
+    long i = (long) arg;
 
     if(filosofos[i]== 'P'){
         filosofos[i] = 'F';
@@ -34,7 +34,7 @@ void* f_mutex(void* arg){
 void* f_filosofos(void* arg){
     
     while(1){
-        int i = (int) arg;
+        long i = (long) arg;
         int sleep = rand() % 10000;
         usleep(sleep);
 
