@@ -1,10 +1,13 @@
 #include <iostream>
 #include <semaphore.h>
 #include <sys/mman.h>
+#include <sys/wait.h>
 #include <semaphore.h>
 #include <unistd.h>
 #include <cstdlib>
 #include <ctime>
+#include <fcntl.h>
+
 
 using namespace std;
 
