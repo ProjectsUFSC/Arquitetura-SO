@@ -43,13 +43,13 @@ int main(){
     }
 
     for(int i = 0; i < nprocs; i++){
-        int tempo = rand() % 10 + 1;
-        sleep(tempo);
+        // int tempo = rand() % 10 + 1;
+        // sleep(tempo);
         pid_t pid = fork();
 
         if(pid == 0 ){
-            // int tempo = rand() % 10 + 1;
-            // sleep(tempo);
+            int tempo = rand() % 10 + 1;
+            sleep(tempo);
             sem_wait(semaforo);
             *id += 1;
             cout << "Processo " << *id << " criado" << endl;
@@ -65,7 +65,7 @@ int main(){
     }
 
     sem_close(semaforo);
-    sem_unlink("/mysemaphore");
+    sem_unlink("/semaforo");
     munmap(id, sizeof(int));
 
     return 0;
