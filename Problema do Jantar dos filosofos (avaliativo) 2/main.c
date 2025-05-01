@@ -3,6 +3,7 @@
 #include <semaphore.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <time.h>
 
 volatile char filosofos[5] = {'P','P','P','P','P'};
 
@@ -17,13 +18,16 @@ void* f_mutex(void* arg){
     if(filosofos[i]== 'P'){
         printf("Filosofo %ld pegou o garfo\n", i);
         filosofos[i] = 'F';
-        sem_wait(&semaforos[i]);
         
     } else if (filosofos[i] == 'F' && filosofos[(i+4)%5] != 'C' && filosofos[(i+1)%5] != 'C'){
         printf("Filosofo %ld está comendo\n", i);
         filosofos[i] = 'C';
         sem_post(&semaforos[i]);
+        sem_post(&semaforos[(i+4)%5]);
+        sem_post(&semaforos[(i+1)%5]);
 
+    } else if(filosofos[i]== 'F'){
+        sem_wait(&semaforos[i]);
     } else {
         printf("Filosofo %ld largou o garfo\n", i);
         filosofos[i] = 'P';
@@ -39,8 +43,8 @@ void* f_filosofos(void* arg){
     
     while(1){
         long i = (long) arg;
-        int sleep = rand() % 1000000;
-        usleep(sleep);
+        int tempo = rand() % 5+1;
+        sleep(tempo);
 
         f_mutex((void*) i);
     }
@@ -54,12 +58,12 @@ void* f_print(void* arg){
             printf("%c ", filosofos[i]);
         }
         printf("\n");
-        usleep(90000);
+        sleep(2);
     }
 }
 
 int main(){
-
+    srand(time(NULL));
     pthread_t t1, t2, t3, t4, t5, t6;
 
     pthread_mutex_init(&mutex, NULL);
@@ -93,7 +97,6 @@ int main(){
 
 
 }
-
 
 
 // #include <stdio.h>
